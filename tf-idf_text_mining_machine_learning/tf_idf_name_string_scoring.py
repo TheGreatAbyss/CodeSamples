@@ -1,7 +1,7 @@
 from fuzzywuzzy import fuzz
 
 with open('/Users/eabis/Downloads/03-13-2017000','r') as in_file:
-    with open('/Users/eabis/Documents/dumps/tf-idf-name-similarity-scores.txt', 'w') as out_file:
+    with open('/Users/eabis/Documents/dumps/tf-idf_text_mining_machine_learning-name-similarity-scores.txt', 'w') as out_file:
         for line in in_file:
             raw_list = line.split("|")
             stripped = list(map(lambda word: word.strip(), raw_list))

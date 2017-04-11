@@ -14,8 +14,8 @@ from collections import defaultdict
 from math import log10
 from functools import partial
 
-large_collection_raw_rdd = sc.textFile("s3://example_bucket/tf-idf/input/large_collection/")
-small_collection_raw_rdd = sc.textFile("s3://example_bucket/tf-idf/input/small_collection_limited/")
+large_collection_raw_rdd = sc.textFile("s3://example_bucket/tf-idf_text_mining_machine_learning/input/large_collection/")
+small_collection_raw_rdd = sc.textFile("s3://example_bucket/tf-idf_text_mining_machine_learning/input/small_collection_limited/")
 
 # Step 2
 # This preprocessing section computes the score for each word seen throughout both documents.
@@ -57,7 +57,7 @@ count_of_each_word_rdd = combined_rdd.flatMap(lambda tup: key_up_words_for_count
 # The idf score for each word is log(N/count_of_word)
 # For this use case I am using the boolean frequency as there shouldn't be a reason for words to repeat.  
 # Therefore each word should only occur once in each document. 
-# Because we know the tf is always 1, and we know the count of each word, we can pre-compute the tf-idf score for each word.
+# Because we know the tf is always 1, and we know the count of each word, we can pre-compute the tf-idf_text_mining_machine_learning score for each word.
 
 def create_tf_idf(word, word_count):
     idf_score = log10(count_of_docs.value/word_count) 
@@ -67,7 +67,7 @@ tf_idf_rdd = count_of_each_word_rdd.map(create_tf_idf)
 # [(word1: tf_idf_score), (word2: tf_idf_score) ...]
 
 # Step 3
-# Read and transform the smaller dataset into a word to id_list and tf-idf score lookup
+# Read and transform the smaller dataset into a word to id_list and tf-idf_text_mining_machine_learning score lookup
 def split_text_into_list(text):
     word_list = text.split("|")
     stripped = list(map(lambda word: word.strip(), word_list))
@@ -152,7 +152,7 @@ zip_set_tf_idf_rdd = zip_rdd.join(tf_idf_rdd)
 city_set_tf_idf_rdd = city_rdd.join(tf_idf_rdd)
 middle_init_set_tf_idf_rdd = middle_init_rdd.join(tf_idf_rdd)
 state_set_tf_idf_rdd = state_rdd.join(tf_idf_rdd)
-# [(large_collection_word1, (small_collection_id_list, tf-idf-score)
+# [(large_collection_word1, (small_collection_id_list, tf-idf_text_mining_machine_learning-score)
 
 
 
@@ -160,28 +160,28 @@ state_set_tf_idf_rdd = state_rdd.join(tf_idf_rdd)
 # By saving these intermediary rdds the job can easily be restarted from this point without having to rerun the above code.
 now = dt.datetime.now()
 
-tf_idf_rdd.saveAsPickleFile("s3://example_bucket/tf-idf/intermediate/tf_idf_rdd/" + now.strftime('%m_%d_%Y_%H_%M') + "/")
-first_name_tf_idf_rdd.saveAsPickleFile("s3://example_bucket/tf-idf/intermediate/first_name_tf_idf_rdd/" + now.strftime('%m_%d_%Y_%H_%M') + "/")
-last_name_tf_idf_rdd.saveAsPickleFile("s3://example_bucket/tf-idf/intermediate/last_name_tf_idf_rdd/" + now.strftime('%m_%d_%Y_%H_%M') + "/")
-address_tf_idf_rdd.saveAsPickleFile("s3://example_bucket/tf-idf/intermediate/address_tf_idf_rdd/" + now.strftime('%m_%d_%Y_%H_%M') + "/")
+tf_idf_rdd.saveAsPickleFile("s3://example_bucket/tf-idf_text_mining_machine_learning/intermediate/tf_idf_rdd/" + now.strftime('%m_%d_%Y_%H_%M') + "/")
+first_name_tf_idf_rdd.saveAsPickleFile("s3://example_bucket/tf-idf_text_mining_machine_learning/intermediate/first_name_tf_idf_rdd/" + now.strftime('%m_%d_%Y_%H_%M') + "/")
+last_name_tf_idf_rdd.saveAsPickleFile("s3://example_bucket/tf-idf_text_mining_machine_learning/intermediate/last_name_tf_idf_rdd/" + now.strftime('%m_%d_%Y_%H_%M') + "/")
+address_tf_idf_rdd.saveAsPickleFile("s3://example_bucket/tf-idf_text_mining_machine_learning/intermediate/address_tf_idf_rdd/" + now.strftime('%m_%d_%Y_%H_%M') + "/")
 
-birth_set_tf_idf_rdd.saveAsPickleFile("s3://example_bucket/tf-idf/intermediate/birth_set_tf_idf_rdd/" + now.strftime('%m_%d_%Y_%H_%M') + "/")
-zip_set_tf_idf_rdd.saveAsPickleFile("s3://example_bucket/tf-idf/intermediate/zip_set_tf_idf_rdd/" + now.strftime('%m_%d_%Y_%H_%M') + "/")
-state_set_tf_idf_rdd.saveAsPickleFile("s3://example_bucket/tf-idf/intermediate/state_set_tf_idf_rdd/" + now.strftime('%m_%d_%Y_%H_%M') + "/")
-middle_init_set_tf_idf_rdd.saveAsPickleFile("s3://example_bucket/tf-idf/intermediate/middle_init_set_tf_idf_rdd/" + now.strftime('%m_%d_%Y_%H_%M') + "/")
-city_set_tf_idf_rdd.saveAsPickleFile("s3://example_bucket/tf-idf/intermediate/city_set_tf_idf_rdd/" + now.strftime('%m_%d_%Y_%H_%M') + "/")
+birth_set_tf_idf_rdd.saveAsPickleFile("s3://example_bucket/tf-idf_text_mining_machine_learning/intermediate/birth_set_tf_idf_rdd/" + now.strftime('%m_%d_%Y_%H_%M') + "/")
+zip_set_tf_idf_rdd.saveAsPickleFile("s3://example_bucket/tf-idf_text_mining_machine_learning/intermediate/zip_set_tf_idf_rdd/" + now.strftime('%m_%d_%Y_%H_%M') + "/")
+state_set_tf_idf_rdd.saveAsPickleFile("s3://example_bucket/tf-idf_text_mining_machine_learning/intermediate/state_set_tf_idf_rdd/" + now.strftime('%m_%d_%Y_%H_%M') + "/")
+middle_init_set_tf_idf_rdd.saveAsPickleFile("s3://example_bucket/tf-idf_text_mining_machine_learning/intermediate/middle_init_set_tf_idf_rdd/" + now.strftime('%m_%d_%Y_%H_%M') + "/")
+city_set_tf_idf_rdd.saveAsPickleFile("s3://example_bucket/tf-idf_text_mining_machine_learning/intermediate/city_set_tf_idf_rdd/" + now.strftime('%m_%d_%Y_%H_%M') + "/")
 
 # On restart of the job
-birth_set_tf_idf_rdd = sc.pickleFile("s3://example_bucket/tf-idf/intermediate/birth_set_tf_idf_rdd/03_02_2017_21_42/")
-zip_set_tf_idf_rdd = sc.pickleFile("s3://example_bucket/tf-idf/intermediate/zip_set_tf_idf_rdd/03_02_2017_21_42/")
-state_set_tf_idf_rdd = sc.pickleFile("s3://example_bucket/tf-idf/intermediate/state_set_tf_idf_rdd/03_02_2017_21_42/")
-middle_init_set_tf_idf_rdd = sc.pickleFile("s3://example_bucket/tf-idf/intermediate/middle_init_set_tf_idf_rdd/03_02_2017_21_42/")
-city_set_tf_idf_rdd = sc.pickleFile("s3://example_bucket/tf-idf/intermediate/city_set_tf_idf_rdd/03_02_2017_21_42/")
+birth_set_tf_idf_rdd = sc.pickleFile("s3://example_bucket/tf-idf_text_mining_machine_learning/intermediate/birth_set_tf_idf_rdd/03_02_2017_21_42/")
+zip_set_tf_idf_rdd = sc.pickleFile("s3://example_bucket/tf-idf_text_mining_machine_learning/intermediate/zip_set_tf_idf_rdd/03_02_2017_21_42/")
+state_set_tf_idf_rdd = sc.pickleFile("s3://example_bucket/tf-idf_text_mining_machine_learning/intermediate/state_set_tf_idf_rdd/03_02_2017_21_42/")
+middle_init_set_tf_idf_rdd = sc.pickleFile("s3://example_bucket/tf-idf_text_mining_machine_learning/intermediate/middle_init_set_tf_idf_rdd/03_02_2017_21_42/")
+city_set_tf_idf_rdd = sc.pickleFile("s3://example_bucket/tf-idf_text_mining_machine_learning/intermediate/city_set_tf_idf_rdd/03_02_2017_21_42/")
 
-tf_idf_rdd = sc.pickleFile("s3://example_bucket/tf-idf/intermediate/tf_idf_rdd/02_24_2017_18_00/")
-first_name_tf_idf_rdd = sc.pickleFile("s3://example_bucket/tf-idf/intermediate/first_name_tf_idf_rdd/03_02_2017_21_42/")
-last_name_tf_idf_rdd = sc.pickleFile("s3://example_bucket/tf-idf/intermediate/last_name_tf_idf_rdd/03_02_2017_21_42/")
-address_tf_idf_rdd = sc.pickleFile("s3://example_bucket/tf-idf/intermediate/address_tf_idf_rdd/03_02_2017_21_42/")
+tf_idf_rdd = sc.pickleFile("s3://example_bucket/tf-idf_text_mining_machine_learning/intermediate/tf_idf_rdd/02_24_2017_18_00/")
+first_name_tf_idf_rdd = sc.pickleFile("s3://example_bucket/tf-idf_text_mining_machine_learning/intermediate/first_name_tf_idf_rdd/03_02_2017_21_42/")
+last_name_tf_idf_rdd = sc.pickleFile("s3://example_bucket/tf-idf_text_mining_machine_learning/intermediate/last_name_tf_idf_rdd/03_02_2017_21_42/")
+address_tf_idf_rdd = sc.pickleFile("s3://example_bucket/tf-idf_text_mining_machine_learning/intermediate/address_tf_idf_rdd/03_02_2017_21_42/")
 
 
 
@@ -292,5 +292,5 @@ for chunk in chunker(range(10000), chunk_size):
     meta_set = set(chunk)
     large_collection_filtered_meta_rdd = large_collection_rdd.filter(lambda tup: filter_meta(tup, meta_set))
     final_rdd = large_collection_filtered_meta_rdd.flatMap(compare_large_collection_against_small_collection)
-    final_rdd.saveAsTextFile("s3://example_bucket/tf-idf/output/" + now.strftime('%m_%d_%Y_%H_%M') + "/" + str(counter) + "/")
+    final_rdd.saveAsTextFile("s3://example_bucket/tf-idf_text_mining_machine_learning/output/" + now.strftime('%m_%d_%Y_%H_%M') + "/" + str(counter) + "/")
     counter += chunk_size
