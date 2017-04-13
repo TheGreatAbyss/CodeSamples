@@ -1,8 +1,6 @@
-# A few code samples from a Python ETL system I contributed to
-
-This folder contains some code samples from a Python ETL system in which I was a code contributor.
-
 # SQS Queue Event Processor
+
+Some code samples from a Python ETL system in which I was a code contributor.
 
 This folder contains code that extracts event data from an AWS SQS queue and inserts it into Redshift.
 The example event included is page view event data.  The code uses a railway oriented programming
