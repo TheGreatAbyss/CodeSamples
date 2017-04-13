@@ -11,3 +11,5 @@ in both batchs, and individually.
 * The browserInfoParser folder contains code for an AWS lambda that is triggered by an
 initial Kinesis stream.  The lambda parses some header data, then puts the resulting data on a
 second Kinesis stream using the PubSub code in the first folder.
+
+Both folders contain tests that I wrote using mocha, chai, sinon, mock-aws-sinon, and rewire
