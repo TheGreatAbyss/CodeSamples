@@ -121,12 +121,12 @@ describe('Test browserInfoParser Lambda', function () {
                     },
                     parsedData: {
                         cookies: {
-                            parsedCookie1: "cookie_data_to_be_parsed",
-                            parsedCookie2: "bkqYTV58",
+                            parsedCookie1: "parsed_cookie_data_1",
+                            parsedCookie2: "parsed_cookie_data_2",
                             utm_campaign: "campaign_data",
-                            utm_content: "product_lifestyle",
+                            utm_content: "utm_parsed_results",
                             utm_medium: "mobile",
-                            utm_source: "facebook"
+                            utm_source: "some_advertising_source"
                         },
                         userAgent: {
                             ua_browser_family: "Other or Unknown",
