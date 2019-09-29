@@ -1,7 +1,9 @@
 # Code Samples
 
 This repo contains a few samples of code that I have written for both my professional career and
-online coursework
+online coursework.
+
+Code samples are only from 2017 and earlier, as they don not include samples from my current position.
 
 ### All of this Data is Anonymized
 Many identifying characteristics such as tables, companies, and field names have been changed in
