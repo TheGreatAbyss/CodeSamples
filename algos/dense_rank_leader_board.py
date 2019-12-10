@@ -59,20 +59,20 @@ def create_dense_list_leader_board(leader_board):
     return dense_list
 
 
-def get_position_of_new_scores_into_leader_board(dense_list, new_scores):
+def get_position_of_new_scores_into_leader_board(leader_board, new_scores):
     player_positions = []
     for score in new_scores:
-        insertion_point = bisect.bisect_left(dense_list, (score, 1))
-        if insertion_point == len(dense_list):
-            dense_list.append(score)
+        insertion_point = bisect.bisect_left(leader_board, (score, 1))
+        if insertion_point == len(leader_board):
+            leader_board.append(score)
             player_positions.append(1)
-        elif dense_list[insertion_point][0] == score:
-            dense_list.increment_container(insertion_point)
-            player_positions.append(len(dense_list) - insertion_point)
+        elif leader_board[insertion_point][0] == score:
+            leader_board.increment_container(insertion_point)
+            player_positions.append(len(leader_board) - insertion_point)
         else:
-            player_positions.append(len(dense_list) - insertion_point + 1)
-            dense_list.insert(insertion_point, score)
-    return player_positions,  dense_list
+            player_positions.append(len(leader_board) - insertion_point + 1)
+            leader_board.insert(insertion_point, score)
+    return player_positions, leader_board
 
 
 def test_dense_list():
