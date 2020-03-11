@@ -6,7 +6,7 @@ Optimizes by running the shortest cook_time first
 Basically the same thing as the scheduling greedy algo except value is always the same.
 """
 
-def minimumAverage(customers):
+def minimum_average_wait_time(customers):
     customers = sorted(customers)
     t = 0
     h = []
@@ -41,7 +41,7 @@ def test_cast_one():
     ]
 
     expected = 8
-    actual = minimumAverage(customers)
+    actual = minimum_average_wait_time(customers)
     print(actual)
     assert expected == actual
 
@@ -58,7 +58,7 @@ def test_case_two():
             line = line.strip("\n")
             customers.append(tuple(map(int, line.split(" "))))
     print(customers[:4])
-    actual = minimumAverage(customers)
+    actual = minimum_average_wait_time(customers)
     print (actual)
     assert expected == actual
 
