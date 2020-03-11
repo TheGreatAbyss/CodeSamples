@@ -23,7 +23,7 @@ I prefer the below solution which solves for any random input of new player scor
 
 import bisect
 
-
+# Subclass the builtin Python List and override basic methods
 class DenseList(list):
     def __init__(self):
         super(DenseList, self).__init__()
