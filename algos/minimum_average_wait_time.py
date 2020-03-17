@@ -9,20 +9,20 @@ Basically the same thing as the scheduling greedy algo except value is always th
 def minimum_average_wait_time(customers):
     customers = sorted(customers)
     t = 0
-    h = []
+    heap = []
     customer_sum = 0
     customer_count = 0
 
-    while customers or h:
+    while customers or heap:
         # Add any customers who have arrived since last cook
         while customers and customers[0][0] <= t:
             (arrival_time, cook_time) = customers.pop(0)
             customer_count += 1
-            heapq.heappush(h, (cook_time, arrival_time))
+            heapq.heappush(heap, (cook_time, arrival_time))
 
-        if h:
+        if heap:
             # print(customers)
-            (cook_time, arrival_time) = heapq.heappop(h)
+            (cook_time, arrival_time) = heapq.heappop(heap)
             # print(cook_time)
             customer_sum += (t + cook_time - arrival_time)
             t += cook_time
@@ -33,8 +33,9 @@ def minimum_average_wait_time(customers):
     return customer_sum // customer_count
 
 
-def test_cast_one():
+def test_case_one():
     customers = [
+        # (arrival_time, cook_time)
         (0, 3),
         (1, 9),
         (2, 5)
@@ -46,7 +47,7 @@ def test_cast_one():
     assert expected == actual
 
 
-test_cast_one()
+test_case_one()
 
 
 def test_case_two():
